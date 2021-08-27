@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import Head from 'next/head'
-import Header from '../components/Header'
-import MyDocs from '../components/MyDocs'
-import Login from '../components/login'
-import { signIn, signOut, getSession } from 'next-auth/client'
-import AddIcon from '@material-ui/icons/Add'
-import Model from '../components/Model'
-import { db, firebase } from '../firebase'
-import { useCollection } from 'react-firebase-hooks/firestore'
+import React, { useState, useEffect } from "react"
+import Head from "next/head"
+import Header from "../components/Header"
+import MyDocs from "../components/MyDocs"
+import Login from "../components/login"
+import { signIn, signOut, getSession } from "next-auth/client"
+import AddIcon from "@material-ui/icons/Add"
+import Model from "../components/Model"
+import { db, firebase } from "../firebase"
+import { useCollection } from "react-firebase-hooks/firestore"
 
 export const getServerSideProps = async context => {
   const session = await getSession(context)
+
   return {
     props: {
       session,
@@ -25,13 +26,13 @@ export default function Home({ data, session }) {
 
   const [dataState, setDataState] = useState(data)
   const [showModal, setShowModal] = React.useState(false)
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState("")
 
   useEffect(() => {
-    db.collection('users')
+    db.collection("users")
       .doc(session?.user?.email)
-      .collection('documents')
-      .orderBy('timestamp', 'desc')
+      .collection("documents")
+      .orderBy("timestamp", "desc")
       .onSnapshot(snapshot =>
         setDataState(
           snapshot?.docs.map(doc => ({
@@ -43,15 +44,15 @@ export default function Home({ data, session }) {
   }, [])
 
   const addtodb = () => {
-    db.collection('users')
+    db.collection("users")
       .doc(session?.user?.email)
-      .collection('documents')
+      .collection("documents")
       .add({
         name: input,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
 
-    setInput('')
+    setInput("")
     setShowModal(false)
   }
 

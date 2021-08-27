@@ -1,12 +1,12 @@
-import React from 'react'
-import Image from 'next/image'
-import Button from '@material-tailwind/react/Button'
-import MenuIcon from '@material-ui/icons/Menu'
-import SearchIcon from '@material-ui/icons/Search'
-import AppsIcon from '@material-ui/icons/Apps'
-import Avatar from '@material-ui/core/Avatar'
-import { signIn, signOut, useSession } from 'next-auth/client'
-import Link from 'next/link'
+import React from "react"
+import Image from "next/image"
+import Button from "@material-tailwind/react/Button"
+import MenuIcon from "@material-ui/icons/Menu"
+import SearchIcon from "@material-ui/icons/Search"
+import AppsIcon from "@material-ui/icons/Apps"
+import Avatar from "@material-ui/core/Avatar"
+import { signIn, signOut, useSession } from "next-auth/client"
+import Link from "next/link"
 
 const Header = () => {
   const [session] = useSession()
@@ -41,7 +41,7 @@ const Header = () => {
         </div>
         <Avatar
           src={session?.user?.image}
-          onClick={signOut}
+          onClick={() => signOut()}
           className="cursor-pointer"
         />
       </div>

@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import React from 'react'
-import Button from '@material-tailwind/react/Button'
-import { signIn } from 'next-auth/client'
+import Image from "next/image"
+import React from "react"
+import Button from "@material-tailwind/react/Button"
+import { signIn } from "next-auth/client"
 
 const login = () => {
   return (
@@ -21,7 +21,7 @@ const login = () => {
         iconOnly={false}
         ripple="light"
         className="mt-4 ml-8"
-        onClick={signIn}
+        onClick={() => signIn()}
       >
         Login with Google
       </Button>

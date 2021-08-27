@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { EditorState } from 'draft-js'
-import { db } from '../firebase'
-import { useRouter } from 'next/dist/client/router'
-import { convertFromRaw, convertToRaw } from 'draft-js'
-import { useSession } from 'next-auth/client'
-import { useDocumentOnce } from 'react-firebase-hooks/firestore'
-import dynamic from 'next/dynamic'
+import { useEffect, useState } from "react"
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+import { EditorState } from "draft-js"
+import { db } from "../firebase"
+import { useRouter } from "next/dist/client/router"
+import { convertFromRaw, convertToRaw } from "draft-js"
+import { useSession } from "next-auth/client"
+import { useDocumentOnce } from "react-firebase-hooks/firestore"
+import dynamic from "next/dynamic"
 
 const Editor = dynamic(
-  () => import('react-draft-wysiwyg').then(module => module.Editor),
+  () => import("react-draft-wysiwyg").then(module => module.Editor),
   {
     ssr: false,
   }
@@ -20,7 +20,7 @@ function TextEditor({ id, snapshot }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
   useEffect(() => {
-    if (snapshot?.data()?.editorState) {
+    if (snapshot?.data()?.editorState && session) {
       setEditorState(
         EditorState.createWithContent(
           convertFromRaw(snapshot?.data()?.editorState)
@@ -32,9 +32,9 @@ function TextEditor({ id, snapshot }) {
   const onEditorStateChange = editorState => {
     setEditorState(editorState)
 
-    db.collection('users')
+    db.collection("users")
       .doc(session.user.email)
-      .collection('documents')
+      .collection("documents")
       .doc(id)
       .set(
         {

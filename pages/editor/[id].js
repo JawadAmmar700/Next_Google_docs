@@ -1,14 +1,25 @@
-import React from 'react'
-import Image from 'next/image'
-import { signIn, signOut, useSession } from 'next-auth/client'
-import Button from '@material-tailwind/react/Button'
-import Avatar from '@material-ui/core/Avatar'
-import TextEditor from '../../components/Editor'
-import { useDocumentOnce } from 'react-firebase-hooks/firestore'
-import { db } from '../../firebase'
-import Link from 'next/link'
+import React from "react"
+import Image from "next/image"
+import { signIn, signOut, useSession, getSession } from "next-auth/client"
+import Button from "@material-tailwind/react/Button"
+import Avatar from "@material-ui/core/Avatar"
+import TextEditor from "../../components/Editor"
+import { useDocumentOnce } from "react-firebase-hooks/firestore"
+import { db } from "../../firebase"
+import Link from "next/link"
+import { useRouter } from "next/router"
 
 export const getServerSideProps = async context => {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }
+  }
   return {
     props: {
       id: context.params.id,
@@ -19,12 +30,14 @@ export const getServerSideProps = async context => {
 const docId = ({ id }) => {
   const [session] = useSession()
   const [snapshot] = useDocumentOnce(
-    db
-      .collection('users')
-      .doc(session?.user.email)
-      .collection('documents')
-      .doc(id)
+    session &&
+      db
+        .collection("users")
+        .doc(session?.user.email)
+        .collection("documents")
+        .doc(id)
   )
+  const router = useRouter()
 
   return (
     <div>
@@ -76,13 +89,13 @@ const docId = ({ id }) => {
           </Button>
           <Avatar
             src={session?.user?.image}
-            onClick={signOut}
+            onClick={() => signOut()}
             className="cursor-pointer"
           />
         </div>
       </nav>
 
-      <TextEditor id={id} snapshot={snapshot} />
+      <TextEditor id={id} snapshot={snapshot} session={session} />
     </div>
   )
 }
