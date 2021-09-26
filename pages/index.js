@@ -20,13 +20,12 @@ export const getServerSideProps = async context => {
 }
 
 export default function Home({ data, session }) {
-  if (!session) {
-    return <Login />
-  }
-
   const [dataState, setDataState] = useState(data)
   const [showModal, setShowModal] = React.useState(false)
   const [input, setInput] = useState("")
+  if (!session) {
+    return <Login />
+  }
 
   useEffect(() => {
     db.collection("users")
