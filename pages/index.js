@@ -23,9 +23,6 @@ export default function Home({ data, session }) {
   const [dataState, setDataState] = useState(data)
   const [showModal, setShowModal] = React.useState(false)
   const [input, setInput] = useState("")
-  if (!session) {
-    return <Login />
-  }
 
   useEffect(() => {
     db.collection("users")
@@ -41,6 +38,10 @@ export default function Home({ data, session }) {
         )
       )
   }, [])
+
+  if (!session) {
+    return <Login />
+  }
 
   const addtodb = () => {
     db.collection("users")
