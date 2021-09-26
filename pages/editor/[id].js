@@ -27,7 +27,7 @@ export const getServerSideProps = async context => {
   }
 }
 
-const docId = ({ id }) => {
+const DocId = ({ id }) => {
   const [session] = useSession()
   const [snapshot] = useDocumentOnce(
     session &&
@@ -100,4 +100,4 @@ const docId = ({ id }) => {
   )
 }
 
-export default docId
+export default DocId
