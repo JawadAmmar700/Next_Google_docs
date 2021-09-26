@@ -2,13 +2,13 @@
 import firebase from "firebase"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA8he-fRu7E8wjEkVbdHvDYbR8hyViFXpE",
-  authDomain: "next-docs.firebaseapp.com",
-  projectId: "next-docs",
-  storageBucket: "next-docs.appspot.com",
-  messagingSenderId: "494233150054",
-  appId: "1:494233150054:web:c713ae8258ad96e7f343a7",
-  measurementId: "G-KNGNSE8NFD",
+  apiKey: "AIzaSyBIqxC14nytj52dEENY9jkEho_Q9heteWE",
+  authDomain: "docs-8a1a5.firebaseapp.com",
+  projectId: "docs-8a1a5",
+  storageBucket: "docs-8a1a5.appspot.com",
+  messagingSenderId: "60186955549",
+  appId: "1:60186955549:web:bd50de323b58b5df50dbf4",
+  measurementId: "G-CNR7L3WL35",
 }
 
 const app = !firebase.apps.length
